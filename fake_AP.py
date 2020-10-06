@@ -36,7 +36,7 @@ if __name__ == "__main__":
     parser.add_argument("interface", default="wlan0mon", help="The interface to send beacon frames with, must be in monitor mode")
     parser.add_argument("-n", "--access-points", dest="n_ap", help="Number of access points to be generated")
     args = parser.parse_args()
-    n_ap = args.n_ap
+    n_ap = int(args.n_ap)
     iface = args.interface
 
     # generate random SSIDs and MACs
