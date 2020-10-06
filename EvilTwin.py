@@ -70,6 +70,7 @@ def main():
         ap_mac = ap_list[mac_adder]
         ssid_name = ssid_list[mac_adder]
         cc.Create_hostapd(iface, ssid_name)
+        cc.Create_dnsmasq(iface)
         Users_scaning()
     #Choose user to attack
     if len(users_list) > 0 :
@@ -86,6 +87,7 @@ def main():
                 break
         mm.Change_back(iface)
         os.system("rm hostapd.conf")
+        os.system("rm dnsmasq.conf")
 
 
 if __name__ == "__main__":
