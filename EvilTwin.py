@@ -82,7 +82,7 @@ def main():
         disconnectThread.start()
         time.sleep(3)
         print("process keep going...")
-        #fa.start(iface)
+        fa.start(iface)
         while True:
             try:
                 time.sleep(2) 
