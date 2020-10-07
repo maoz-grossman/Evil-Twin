@@ -6,7 +6,8 @@ import time
 dnsmasq_conf = "dnsmasq.conf"
 hostapd_conf = "hostapd.conf"
 
-
+def airmon_check_kill():
+	os.system("airmon-ng check kill")
 
 def kill_dnsmasq_and_hostapd():
 	os.system("killall dnsmasq hostapd")
@@ -23,6 +24,7 @@ def restart_network():
 	os.system("service network-manager restart")	
 
 def start(iface):
+    airmon_check_kill()
     kill_dnsmasq_and_hostapd()
     start_dnsmasq(iface)
     print("\npress CTRL + C  twice to stop\n")
