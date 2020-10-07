@@ -4,10 +4,10 @@ import sys
 import threading
 import time
 import logging
+import signal
 import MonitorMode as mm
 import CreateConf as cc
 import FakeAP as f_ap
-import signal
 
 
 
@@ -97,7 +97,8 @@ def main():
             except KeyboardInterrupt:
                 break
         mm.Change_back_airmon(iface)
-        os.system("rm *.conf")
+        cc.Delete_conf_files()
+        #os.system("rm *.conf")
         
 
 if __name__ == "__main__":

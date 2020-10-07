@@ -1,3 +1,4 @@
+import os 
 
 def Create_hostapd(iface, ssid="Free wifi"):
     interface_str= "interface="+str(iface)+"\n"
@@ -5,8 +6,9 @@ def Create_hostapd(iface, ssid="Free wifi"):
     ssid_str= "ssid="+str(ssid)+"\n"
     channel_str = "channel=1 \n"
     conf_str= interface_str+driver_str+ssid_str+channel_str
-    f = open("hostapd.conf", "w")
+    f = open("hostapd.conf", "w+")
     f.write(conf_str)
+    os.chmod("hostapd.conf",0o777)
 
 
 def Create_dnsmasq(iface):
@@ -21,5 +23,10 @@ def Create_dnsmasq(iface):
     body_str+="\nno-resolv"
     body_str+="\naddress=/#/10.0.0.1"
     conf_str = iface_str+body_str
-    f = open("dnsmasq.conf", "w")
+    f = open("dnsmasq.conf", "w+")
     f.write(conf_str)
+    os.chmod("dnsmasq.conf",0o777)
+
+
+def Delete_conf_files():
+    os.system("rm *.conf")
