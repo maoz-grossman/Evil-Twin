@@ -11,7 +11,7 @@ def change_to_MonitorMode(iface):
     os.system("sudo ip link set "+ iface+ " down")
     os.system("sudo iw "+ iface+  " set monitor none")
     os.system("sudo ip link set "+ iface+ " up")
-    #os.system("clear")
+    os.system("clear")
 
 def change_back(iface):
     os.system("sudo ip link set "+ iface+ " down")
