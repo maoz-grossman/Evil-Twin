@@ -1,15 +1,7 @@
 from configparser import ConfigParser
 
 def Create_hostapd(iface, ssid="Free wifi"):
-    config_object = ConfigParser()
-    config_object["HOSTAPD"] = {
-    "interface": iface ,
-    "driver" : "nl80211",
-    "ssid" : str(ssid) ,
-    "channel": 1
-    }
-
-    interface_str= "interface="+iface+"\n"
+    interface_str= "interface="+str(iface)+"\n"
     driver_str="driver=nl80211\n"
     ssid_str= "ssid="+str(ssid)+"\n"
     channel_str = "channel=1 \n"
@@ -21,7 +13,7 @@ def Create_hostapd(iface, ssid="Free wifi"):
 
 
 def Create_dnsmasq(iface):
-    iface_str= "interface="+iface+""
+    iface_str= "interface="+str(iface)+""
     body_str= "\ndhcp-range=10.0.0.3,10.0.0.20,12h"
     body_str+="\ndhcp-option=3,10.0.0.1"
     body_str+="\ndhcp-option=6,10.0.0.1"
