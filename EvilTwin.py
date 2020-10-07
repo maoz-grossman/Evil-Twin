@@ -62,7 +62,7 @@ def DisConnectAttack(target_mac , gateway_mac, iface):
 def main():
     global iface ,ap_mac
     iface = input("please enter your interface: ")
-    iface = mm.change_to_MonitorMode(iface)
+    iface = mm.Change_to_MonitorMode(iface)
     print("********Evil Twin Attack*********")
     time.sleep(1)
     Wifi_scaning()
@@ -88,7 +88,7 @@ def main():
                 time.sleep(2) 
             except KeyboardInterrupt:
                 break
-        mm.change_back(iface)
+        mm.Change_back(iface)
         os.system("rm *.conf")
         
 
