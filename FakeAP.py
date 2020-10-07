@@ -12,7 +12,7 @@ def start_dnsmasq(iface):
 	os.system("dnsmasq -C " + dnsmasq_conf)
 	os.system("iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE")
 	os.system("iptables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT")
-	os.system("iptables -A FORWARD -i " + iface + " -o eth0 -j ACCEPT")
+	os.system("iptables -A FORWARD -i " + str(iface) + " -o eth0 -j ACCEPT")
 	os.system("sysctl -w net.ipv4.ip_forward=1")
 
 
