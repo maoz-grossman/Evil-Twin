@@ -12,7 +12,7 @@ def Create_hostapd(iface, ssid="Free wifi"):
     interface_str= "interface="+iface+"\n"
     driver_str="driver=nl80211\n"
     ssid_str= "ssid="+str(ssid)+"\n"
-    channel_str = "channel=1\n"
+    channel_str = "channel=1 \n"
     conf_str= interface_str+driver_str+ssid_str+channel_str
     f = open("hostapd.conf", "w")
     f.write(conf_str)

