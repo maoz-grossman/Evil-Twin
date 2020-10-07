@@ -1,9 +1,13 @@
 import os
 import signal
 import time
+import CreateConf as cc
+
 
 dnsmasq_conf = "dnsmasq.conf"
 hostapd_conf = "hostapd.conf"
+
+
 
 def kill_dnsmasq_and_hostapd():
 	os.system("killall dnsmasq hostapd")

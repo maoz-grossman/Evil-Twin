@@ -8,8 +8,6 @@ def Create_hostapd(iface, ssid="Free wifi"):
     conf_str= interface_str+driver_str+ssid_str+channel_str
     f = open("hostapd.conf", "w")
     f.write(conf_str)
-    #with open('hostapd.conf', 'w') as conf:
-        #config_object.write(conf)
 
 
 def Create_dnsmasq(iface):
