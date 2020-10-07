@@ -5,13 +5,13 @@ def Create_hostapd(iface, ssid="Free wifi"):
     config_object["HOSTAPD"] = {
     "interface": iface ,
     "driver" : "nl80211",
-    "ssid" : ssid ,
+    "ssid" : str(ssid) ,
     "channel": 1
     }
 
     interface_str= "interface="+iface+"\n"
     driver_str="driver=nl80211\n"
-    ssid_str= "ssid="+ssid+"\n"
+    ssid_str= "ssid="+str(ssid)+"\n"
     channel_str = "channel=1\n"
     conf_str= interface_str+driver_str+ssid_str+channel_str
     f = open("hostapd.conf", "w")
