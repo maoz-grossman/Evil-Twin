@@ -1,7 +1,6 @@
 import os
 import signal
 import time
-import CreateConf as cc
 
 
 dnsmasq_conf = "dnsmasq.conf"

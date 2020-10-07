@@ -1,4 +1,3 @@
-from configparser import ConfigParser
 
 def Create_hostapd(iface, ssid="Free wifi"):
     interface_str= "interface="+str(iface)+"\n"
