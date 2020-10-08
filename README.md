@@ -46,7 +46,7 @@
   The second to create the fake access point.<br>
   It is also possible to run only the second part of the attack, and only create a fake access point.
   <br>
-  All you need is to run this on the terminal ► <b> sudo python runFAP.py </b>
+  All you need is to run this on the terminal ► <b> sudo python runFakeAP.py </b>
   <br>
   If you just want to disconnect a user from the network, you can do so by setting line 93 in the 'EvilTwin.py' script as a comment.
   </p>
