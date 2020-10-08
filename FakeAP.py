@@ -54,18 +54,5 @@ def start(iface):
     empty = raw_input("\nPress Enter to Close Fake Accses Point AND Power OFF the fake AP.........\n")
     reset_setting()
     
-    '''
-    airmon_check_kill()
-    kill_dnsmasq_and_hostapd()
-    start_dnsmasq(iface)
-    print("\npress CTRL + C  twice to stop\n")
-    while True:
-        try:
-            time.sleep(1)
-            os.system("hostapd " + hostapd_conf)
-        except KeyboardInterrupt:
-            break
-    restart_network()
-    '''
 	
 	
