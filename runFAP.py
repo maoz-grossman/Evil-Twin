@@ -3,7 +3,7 @@ import os
 import sys
 
 def fun():
-    i = input("Enter interface name: ")
+    i = raw_input("Enter interface name: ")
     type(i)
     f_ap.start(str(i))
 

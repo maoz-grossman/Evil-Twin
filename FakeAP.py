@@ -51,7 +51,7 @@ def start(iface):
     reset_setting()
     AP_on(iface)
     run_AP()
-    empty = input ("\nPress Enter to Close Fake Accses Point AND Power OFF the fake AP.........\n")
+    empty = raw_input("\nPress Enter to Close Fake Accses Point AND Power OFF the fake AP.........\n")
     reset_setting()
     
     '''
