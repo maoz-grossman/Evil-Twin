@@ -1,5 +1,5 @@
 # Evil-Twin
-##Simple implementation in Python for the evil twin attack
+## Simple implementation in Python for the evil twin attack
 
 <h2>About the attak:</h2>
 <p>
@@ -39,7 +39,7 @@
   <h4>How to run the attack</h4>
   <p>
   You can run the attack from the Python file:  EvilTwin.py.<br>
-  All you need to do is just to run the code on the terminal ► <b> sudo python EvilTwin.py
+  All you need to do is just to run the code on the terminal ► <b> sudo python EvilTwin.py </b>
   <br>
   There you will be asked to enter the names of the interfaces you would like to use.<br>
   The first is for sniffing net after attack nets.<br>
