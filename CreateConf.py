@@ -16,11 +16,6 @@ def Create_dnsmasq(iface):
     body_str= "\ndhcp-range=10.0.0.3,10.0.0.20,12h"
     body_str+="\ndhcp-option=3,10.0.0.1"
     body_str+="\ndhcp-option=6,10.0.0.1"
-    body_str+="\nlog-queries"
-    body_str+="\nlog-dhcp"
-    body_str+="\nlisten-address=127.0.0.1"
-    body_str+="\nport=53"
-    body_str+="\nno-resolv"
     body_str+="\naddress=/#/10.0.0.1"
     conf_str = iface_str+body_str
     f = open("dnsmasq.conf", "w+")

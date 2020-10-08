@@ -90,7 +90,7 @@ def main():
         disconnectThread.start()
         time.sleep(3)
         print("process keep going...")
-        #f_ap.start(net_stick_iface)
+        #f_ap.start(iface2)
         while True:
             try:
                 time.sleep(2) 

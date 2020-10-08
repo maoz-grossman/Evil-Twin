@@ -3,27 +3,58 @@ import signal
 import time
 
 
-dnsmasq_conf = "dnsmasq.conf"
-hostapd_conf = "hostapd.conf"
 
-def airmon_check_kill():
-	os.system("airmon-ng check kill")
+def reset_setting():
+    os.system('service NetworkManager start')
+    os.system('service apache2 stop')
+    os.system('service hostapd stop')
+    os.system('service dnsmasq stop')
+    os.system('service rpcbind stop')
+    os.system('killall dnsmasq >/dev/null 2>&1')
+    os.system('killall hostapd >/dev/null 2>&1')
+    os.system('systemctl enable systemd-resolved.service >/dev/null 2>&1')
+    os.system('systemctl start systemd-resolved >/dev/null 2>&1')
 
-def kill_dnsmasq_and_hostapd():
-	os.system("killall dnsmasq hostapd")
+def AP_on(iface):
+    os.system('systemctl disable systemd-resolved.service >/dev/null 2>&1')
+    os.system('systemctl stop systemd-resolved>/dev/null 2>&1')
+    os.system('service NetworkManager stop')
+    os.system(' pkill -9 hostapd')
+    os.system(' pkill -9 dnsmasq')
+    os.system(' pkill -9 wpa_supplicant')
+    os.system(' pkill -9 avahi-daemon')
+    os.system(' pkill -9 dhclient')
+    os.system('killall dnsmasq >/dev/null 2>&1')
+    os.system('killall hostapd >/dev/null 2>&1')
+    set_ap_ip="ifconfig "+ iface +" 10.0.0.1 netmask 255.255.255.0"
+    os.system(set_ap_ip)
+    os.system('route add default gw 10.0.0.1')
+    os.system('echo 1 > /proc/sys/net/ipv4/ip_forward')
+    os.system('iptables --flush')
+    os.system('iptables --table nat --flush')
+    os.system('iptables --delete-chain')
+    os.system('iptables --table nat --delete-chain')
+    os.system('iptables -P FORWARD ACCEPT')
 
-def start_dnsmasq(iface):
-	os.system("dnsmasq -C " + dnsmasq_conf)
-	os.system("iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE")
-	os.system("iptables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT")
-	os.system("iptables -A FORWARD -i " + str(iface) + " -o eth0 -j ACCEPT")
-	os.system("sysctl -w net.ipv4.ip_forward=1")
+def run_AP():
+	os.system('dnsmasq -C dnsmasq.conf')
+	os.system('gnome-terminal -- sh -c "node html/index2.js"')
+	os.system('route add default gw 10.0.0.1')
+	os.system('hostapd hostapd.conf -B')
+	os.system('route add default gw 10.0.0.1')
 
 
-def restart_network():
-	os.system("service network-manager restart")	
+
+	
 
 def start(iface):
+    reset_setting()
+    AP_on(iface)
+    run_AP()
+    empty = input ("\nPress Enter to Close Fake Accses Point AND Power OFF the fake AP.........\n")
+    reset_setting()
+    
+    '''
     airmon_check_kill()
     kill_dnsmasq_and_hostapd()
     start_dnsmasq(iface)
@@ -35,6 +66,6 @@ def start(iface):
         except KeyboardInterrupt:
             break
     restart_network()
-    
+    '''
 	
 	
