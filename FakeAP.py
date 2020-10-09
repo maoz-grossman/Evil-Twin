@@ -38,11 +38,16 @@ def AP_on(iface):
 
 def run_AP():
 	os.system('dnsmasq -C dnsmasq.conf')
-	os.system('gnome-terminal -- sh -c "node html/index2.js"')
 	os.system('route add default gw 10.0.0.1')
 	os.system('hostapd hostapd.conf -B')
 	os.system('route add default gw 10.0.0.1')
 
+def start_apache():
+    os.system('service apache2 start')
+    os.system('cp html/index.html /var/www/html/')
+    os.system('cp -r html/css /var/www/html/')
+    os.system('cp -r html/js /var/www/html/')
+    os.system('cp -r html/images /var/www/html/')
 
 
 	
@@ -50,6 +55,7 @@ def run_AP():
 def start(iface):
     reset_setting()
     AP_on(iface)
+    start_apache()
     run_AP()
     empty = raw_input("\nPress Enter to Close Fake Accses Point AND Power OFF the fake AP.........\n")
     reset_setting()
