@@ -90,14 +90,14 @@ def main():
         disconnectThread.start()
         time.sleep(3)
         print("process keep going...")
-        f_ap.start(iface2)
+        #f_ap.start(iface2)
         while True:
             try:
                 time.sleep(2) 
             except KeyboardInterrupt:
                 break
         mm.Change_back_airmon(iface)
-        cc.Delete_conf_files()
+        #cc.Delete_conf_files()
         
         
 

