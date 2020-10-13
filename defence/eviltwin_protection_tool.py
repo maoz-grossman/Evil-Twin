@@ -1,5 +1,6 @@
 import os
 import iwlist
+from termcolor import colored
 # display some additional information from a wireless network interface with iwlist
 
 # iwlist was added from  https://github.com/iancoleman/python-iwlist
@@ -21,21 +22,34 @@ if so, it alerts the user.
 '''
 
 
-def detect_malicious_activity(iface):
+def detect_malicious_activity(iface,current_ssid):
     iface_metadata = iwlist.scan(iface)
     data = iwlist.parse(iface_metadata)
-
+    foundMalicious = False
+    Malicious = []
     for obj in data :
-        if(data.count(obj['mac']) > 1 and data.count(obj['essid']) > 1):
-            print("WE FOUND MALICIOUS  CONTENT ON " + iface + "  CHECK YOUR CONNECTIONS NOW !\n")
+        if(obj['essid'] == current_ssid) and int(obj['signal_quality']) >= 50:
+            Malicious.append(obj)
+    
+    if len(Malicious)>1:
+        print colored("WE FOUND MALICIOUS  CONTENT ON " + iface + "  CHECK YOUR CONNECTIONS NOW !", 'red')
+        print colored('\n essid    signal quality      mac        channel','yellow')
+        for obj in Malicious:
+            print(obj['essid'],obj['signal_quality'], obj['mac'],obj['channel'])
+    else:
+        print colored("Checked! There is no sign of a malicious attack", 'green')
 
-    print ("scan finished")
+
+    print ("\n\nscan finished")
 
 
 def scan_iface():
+    os.system('iwconfig')
     i = raw_input("Enter interface name to scan fake content: ")
-    detect_malicious_activity(i)
-
+    essid = raw_input("Enter the current access point name: ")
+    os.system('clear')
+    print "MALICIOUS SCANNING..."
+    detect_malicious_activity(i , essid)
 
 
 
