@@ -28,14 +28,15 @@ def detect_malicious_activity(iface,current_ssid):
     foundMalicious = False
     Malicious = []
     for obj in data :
-        if(obj['essid'] == current_ssid) and int(obj['signal_quality']) >= 50:
+        if(obj['essid'] == current_ssid) :
             Malicious.append(obj)
     
     if len(Malicious)>1:
         print colored("WE FOUND MALICIOUS  CONTENT ON " + iface + "  CHECK YOUR CONNECTIONS NOW !", 'red')
-        print colored('\n essid    signal quality      mac        channel','yellow')
+        print colored('\n essid         mac        channel','yellow')
         for obj in Malicious:
-            print(obj['essid'],obj['signal_quality'], obj['mac'],obj['channel'])
+            print colored("{}, {}, {}".format(obj['essid'], obj['mac'],obj['channel']),'red')
+        print "number of essid with the same name: {}".format(len(Malicious))
     else:
         print colored("Checked! There is no sign of a malicious attack", 'green')
 

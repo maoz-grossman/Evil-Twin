@@ -44,10 +44,9 @@ def AP_handler(pkt) :
 
 def Users_handler(pkt):
     global users_list
-    if pkt.type == 2:
-        if pkt.addr2 not in users_list and pkt.addr1 == ap_mac:
-            users_list.append(pkt.addr2)
-            print(len(users_list),"     " ,pkt.addr2)
+    if pkt.addr2 not in ap_list and pkt.addr3 == ap_mac and pkt.addr2 not in users_list:
+        users_list.append(pkt.addr2)
+        print(len(users_list),"     " ,pkt.addr2)
     
 
 
